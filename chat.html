@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chat</title>
+    <script type="text/javascript" src="jquery.min.js"></script>
+
+    <style media="screen">
+      div.chat_box{
+        height: 400px;
+        width: 50%;
+        border: 1px rgba(200,200,200,0.7) solid;
+        border-radius: 5px;
+        margin-bottom: 1%;
+        overflow: auto;
+        padding: 10px;
+        padding-bottom: 30px;
+      }
+      textarea.input{
+        height: 100px;
+        width: 50%;
+      }
+      div.mess{
+        padding: 3px;
+        background: rgba(200,200,200,0.7);
+        border-radius: 5px 0px;
+        margin: 4px 0px;
+        display: table;
+      }
+      pre{
+        font-family: cursive;
+        margin: 0px;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat_box">
+
+    </div>
+
+    <form class="chat_submit" action="index.html" method="post">
+      <textarea name="chat_input" class="input" rows="8" cols="40" placeholder="Enter you message here..."></textarea>
+      <label>
+        <input type="checkbox" name="name" id="enter" value="" checked>
+        use enter to submit
+      </label>
+      <button type="button" name="submit" class="submit">Submit</button>
+    </form>
+    <iframe src="push.php" width="300px" height="300px">Nothing</iframe>
+  </body>
+
+  <script type="text/javascript">
+    $(function(){
+      //on click..
+      $("button.submit").click(fill_div);
+
+      //handling the keyevent...
+      $('textarea.input').keydown(function(eve){
+        if(eve.which == 13){
+          if($('#enter').prop('checked')){
+            eve.preventDefault();
+            fill_div();
+          }
+        }
+      });
+    });
+
+    //to enter the detail into the chat box..
+    function fill_div(){
+
+      //to fill the div...
+      // alert('hello');
+      //to auto scroll the div..
+      console.log($('div.chat_box').prop('scrollHeight'));
+      $('div.chat_box').scrollTop($('div.chat_box').prop('scrollHeight'));
+      var div_str = $('div.chat_box').html();
+      // alert(div_str.length);
+      if(div_str.length > 0)
+      {
+        if($('textarea.input').val() != "")
+        {
+          //posting the data..
+          $.post('push.php',
+                {chat_id : '123',
+                name : "happy",
+                group_name : "first",
+                message : $('textarea.input').val()},
+                function(){
+                  $.get("http://localhost/chat/chat.php", function(data){
+                    $('div.chat_box').html(data);
+                  //
+                  //   // dat = data;
+                  });
+                  console.log('upload complete');
+                }
+
+                );
+
+          var str = div_str + '<div class="mess"><pre>' + $('textarea.input').val() + "</pre></div>";
+          $('div.chat_box').html(str);
+          $('textarea.input').val("");
+        }
+      }
+      }
+      function get_data(){
+        console.log('start');
+
+        // var dat;
+        //getting the data..
+        //data will contain the data from the chat.php file..
+        $.get("http://localhost/chat/chat.php", function(data){
+          $('div.chat_box').html(data);
+        //
+        //   // dat = data;
+        });
+        // // return dat;
+        // console.log(dat);
+      }
+
+      $(get_data());
+
+  </script>
+  <script type="text/javascript" src="chat.js">
+  </script>
+</html>
