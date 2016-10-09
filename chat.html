@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>chat</title>
     <script type="text/javascript" src="jquery.min.js"></script>
-
+    <base href="http://officechat.16mb.com/" target="_self">
     <style media="screen">
       div.chat_box{
         height: 400px;
@@ -87,7 +87,7 @@
                 group_name : "first",
                 message : $('textarea.input').val()},
                 function(){
-                  $.get("http://localhost/chat/chat.php", function(data){
+                  $.get("http://localhost/my_chat_app/chat.php", function(data){
                     $('div.chat_box').html(data);
                   //
                   //   // dat = data;
@@ -109,7 +109,7 @@
         // var dat;
         //getting the data..
         //data will contain the data from the chat.php file..
-        $.get("http://localhost/chat/chat.php", function(data){
+        $.get("http://localhost/my_chat_app/chat.php", function(data){
           $('div.chat_box').html(data);
         //
         //   // dat = data;

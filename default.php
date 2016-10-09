@@ -40,15 +40,38 @@
     <html>
       <head>
         <meta charset="utf-8">
-        <title>login</title>
+        <title>login</title>\
+<style type="text/css">
+input{
+    margin: 10px;
+    padding: 5px;
+    /* border-radius: 1px; */
+    border: 1px rgba(100,100,100,0.5) solid;
+    border-radius: 5px;
+}
+div.login, div.signup{
+        width: 20%;
+    border: 1px rgba(200,200,200,1) solid;
+    padding: 10px;
+    border-radius: 12px;
+    background: cornflowerblue;
+    padding-left: 25px;
+    display: inline;
+    float: left;
+}
+div.signup{
+float: right;
+}
+}
+</style>
       </head>
       <body>
       <div class="login">
         <h1>Login : </h1>
         <div class="login_div">
-          <form class="login" action="login.php" method="post">
-            <input type="text" name="email" value="">
-            <input type="password" name="password" value="">
+          <form class="login" action="default.php" method="post">
+            <input type="text" name="email" value="" placeholder="Email Id" required>
+            <input type="password" name="password" value="" placeholder="Password" required>
             <input type="submit" name="submit" value="Submit">
           </form>
       </div>
@@ -57,10 +80,10 @@
         <div class="signup">
           <h1>Signup : </h1>
           <form class="signup" action="signup.php" method="post">
-            <input type="text" name="email" value="" placeholder="Email">
-            <input type="password" name="password" value="" placeholder="Password">
-            <input type="text" name="name" value="" placeholder="Name">
-            <input type="text" name="group_name" value="" placeholder="Group Name">
+            <input type="text" name="email" value="" placeholder="Email" required>
+            <input type="password" name="password" value="" placeholder="Password" required>
+            <input type="text" name="name" value="" placeholder="Name" required>
+            <input type="text" name="group_name" value="" placeholder="Group Name" required>
             <input type="submit" name="submit" value="signup">
           </form>
         </div>
@@ -71,3 +94,4 @@
   }
 }
  ?>
+	

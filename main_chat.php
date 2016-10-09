@@ -1,14 +1,25 @@
+<?php
+  if(!isset($_COOKIE['email'])){
+    header('Location: default.php');
+  }
+
+ ?>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>chat</title>
-    <script type="text/javascript" src="jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+    <base href="http://officechat.16mb.com/" target="_self">
+    <!-- <base href="http://localhost/" target="_self"> -->
+
 
     <style media="screen">
       div.chat_box{
         height: 400px;
-        width: 50%;
+        width: 40%;
         border: 1px rgba(200,200,200,0.7) solid;
         border-radius: 5px;
         margin-bottom: 1%;
@@ -17,8 +28,11 @@
         padding-bottom: 30px;
       }
       textarea.input{
-        height: 100px;
-        width: 50%;
+        height: 70px;
+        width: 40%;
+        padding: 8px;
+        /*margin: 5px;*/
+        border-radius: 5px;
       }
       div.mess{
         padding: 3px;
@@ -27,10 +41,67 @@
         margin: 4px 0px;
         display: table;
       }
+      div.mess{
+        display: -webkit-inline-box;
+        background: rgba(200,200,200,0.5);
+        border-radius: 5px 0px;
+        margin: 5px 7px;
+        padding: 5px;
+        font-weight: 500;
+        font-size: 15px;
+      }
+      div.one_chat_box{
+        width: 90%;
+      }
+      span.name{
+        font-weight: 600;
+        color: currentColor;
+        text-decoration: underline;
+      }
       pre{
         font-family: cursive;
         margin: 0px;
 
+      }
+      div.chat_box::-webkit-scrollbar {
+          width: 8px;
+      }
+      label{
+        display: block;
+      }
+
+      div.chat_box::-webkit-scrollbar-track{
+          /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+          -webkit-border-radius: 10px;
+          border-radius: 5px;
+          background: white;
+          border: 1px rgba(200,200,200,0.7) solid;
+      }
+      div.chat_box::-webkit-scrollbar-thumb{
+          -webkit-border-radius: 5px;
+          border-radius: 5px;
+          background: rgba(00,00,00,0.5);
+          /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);*/
+      }
+      div.chat_box::-webkit-scrollbar-thumb:window-inactive{
+          background: rgba(200,200,200,0.4);
+      }
+      div.chat_box::-webkit-scrollbar-thumb:active div.chat_box::-webkit-scrollbar-track{
+          /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+
+          background: rgba(200, 200, 200, 0.5);
+
+      }
+      @media only screen and (max-width: 992px) {
+        div.chat_box{
+          width: 100%;
+          height: 300px;
+        }
+        textarea.input{
+          height: 15%;
+          width: 100%;
+
+        }
       }
     </style>
   </head>
@@ -57,7 +128,6 @@
       </label>
       <button type="button" name="submit" class="submit">Submit</button>
     </form>
-    <iframe src="push.php" width="300px" height="300px">Nothing</iframe>
   </body>
 
   <script type="text/javascript">
@@ -103,7 +173,7 @@
                 group_name : "<?php echo($row['group_name']) ?>",
                 message : $('textarea.input').val()},
                 function(){
-                  $.get("http://localhost/chat/chat.php", function(data){
+                  $.get("http://officechat.16mb.com/chat.php", function(data){
                     $('div.chat_box').html(data);
                   //
                   //   // dat = data;
@@ -119,12 +189,19 @@
         }
       }
       }
+      var prev_data;
       function get_data(){
         console.log('start');
+
         //getting the data..
         //data will contain the data from the chat.php file..
-        $.get("http://localhost/chat/chat.php", function(data){
+        $.get("http://officechat.16mb.com/chat.php", function(data){
           $('div.chat_box').html(data);
+          if(prev_data != data){
+          
+            $('div.chat_box').scrollTop($('div.chat_box').prop('scrollHeight'));
+          }
+          prev_data = data;
           setTimeout(get_data, 2000);
         });
       }

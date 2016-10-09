@@ -1,6 +1,6 @@
 <?php
   if(isset($_COOKIE['email'])){
-    setcookie('email', "", time() - 3600);
+    setcookie('email', "", time() - 3600, '/');
     echo('<script>alert("removed email");</script>');
 
   }
@@ -13,5 +13,5 @@
   // else {
   //   echo('<script>alert("not removed group");</script>');
   // }
-  header('Location: login.php');
+  header('Location: default.php');
  ?>
